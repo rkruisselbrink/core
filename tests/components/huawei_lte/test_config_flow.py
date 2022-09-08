@@ -200,6 +200,53 @@ async def test_ssdp(hass):
     assert result["data_schema"]({})[CONF_URL] == url
 
 
+async def test_reauth(hass, login_requests_mock):
+    """Test reauth."""
+    mock_entry_data = {**FIXTURE_USER_INPUT, CONF_PASSWORD: "invalid-password"}
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        unique_id=FIXTURE_UNIQUE_ID,
+        data=mock_entry_data,
+        title="Reauth canary",
+    )
+    entry.add_to_hass(hass)
+
+    context = {
+        "source": config_entries.SOURCE_REAUTH,
+        "unique_id": entry.unique_id,
+        "entry_id": entry.entry_id,
+    }
+    result = await hass.config_entries.flow.async_init(
+        DOMAIN, context=context, data=entry.data
+    )
+
+    assert result["type"] == data_entry_flow.FlowResultType.FORM
+    assert result["step_id"] == "reauth_confirm"
+    assert result["data_schema"]({}) == {
+        CONF_USERNAME: mock_entry_data[CONF_USERNAME],
+        CONF_PASSWORD: mock_entry_data[CONF_PASSWORD],
+    }
+    assert not result["errors"]
+
+    login_requests_mock.request(
+        ANY,
+        f"{FIXTURE_USER_INPUT[CONF_URL]}api/user/login",
+        text="<response>OK</response>",
+    )
+    result = await hass.config_entries.flow.async_configure(
+        result["flow_id"],
+        {
+            CONF_USERNAME: FIXTURE_USER_INPUT[CONF_USERNAME],
+            CONF_PASSWORD: FIXTURE_USER_INPUT[CONF_PASSWORD],
+        },
+    )
+    await hass.async_block_till_done()
+
+    assert result["type"] == data_entry_flow.FlowResultType.ABORT
+    assert result["reason"] == "reauth_successful"
+    assert entry.data == FIXTURE_USER_INPUT
+
+
 async def test_options(hass):
     """Test options produce expected data."""
 
