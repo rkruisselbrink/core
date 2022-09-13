@@ -115,7 +115,7 @@ class RovaSensor(SensorEntity):
         self.data_service = data_service
 
         self._attr_name = f"{platform_name}_{description.name}"
-        self._attr_device_class = SensorDeviceClass.TIMESTAMP
+        self._attr_device_class = SensorDeviceClass.DATE
 
     def update(self) -> None:
         """Get the latest data from the sensor and update the state."""
