@@ -152,6 +152,6 @@ class RovaData:
             code = item["GarbageTypeCode"].lower()
 
             if code not in self.data and date > now():
-                self.data[code] = date
+                self.data[code] = date.date()
 
         _LOGGER.debug("Updated Rova calendar: %s", self.data)
