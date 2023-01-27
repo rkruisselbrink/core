@@ -45,6 +45,8 @@ DEFAULT_LANGUAGE_CODES = {
     "ja": "ja-JP",
     "ko": "ko-KR",
     "pt": "pt-BR",
+    "nl": "nl-NL",
+    "nl": "nl-BE",
 }
 
 

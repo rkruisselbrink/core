@@ -27,4 +27,6 @@ SUPPORTED_LANGUAGE_CODES: Final = [
     "ja-JP",
     "ko-KR",
     "pt-BR",
+    "nl-NL",
+    "nl-BE",
 ]

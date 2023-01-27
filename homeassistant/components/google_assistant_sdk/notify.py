@@ -21,6 +21,7 @@ LANG_TO_BROADCAST_COMMAND = {
     "ja": ("{0}とブロードキャストして", "{0}と{1}にブロードキャストして"),
     "ko": ("{0} 라고 방송해 줘", "{0} 라고 {1}에 방송해 줘"),
     "pt": ("Transmite {0}", "Transmite para {1} {0}"),
+    "nl": ("Roep {0} om", "Roep {0} om naar {1}"),
 }
 
 
