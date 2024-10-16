@@ -92,6 +92,7 @@ def make_device_data(
             "K10+ Pro",
             "Robot Vacuum Cleaner S1",
             "Robot Vacuum Cleaner S1 Plus",
+            "Robot Vacuum Cleaner S10",
         ]:
             devices_data.vacuums.append(
                 prepare_device(hass, api, device, coordinators_by_id)
